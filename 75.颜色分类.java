@@ -160,6 +160,7 @@ class Solution {
     /**
      * 冒泡排序性能: 数据完全有序的情况下是 **O(n)**, 通常情况下为 **O(n^2)**
      * 
+     * 思路：从头开始，向后两两比较，将大的数置换到右边，走完一遍就找到了一个最大值，待排序部分长度-1.
      * 
      * 冒泡排序可优化技术 1. 增加 swap 标识, 当上一轮没有发生交换时,表示这时数组已经有序,停止冒泡 ```java for (int i =
      * arr.length - 1; i > 0; i--) { // 每次需要排序的长度 swap=false; for (int j = 0; j < i;
@@ -189,6 +190,8 @@ class Solution {
     /**
      * 选择排序性能: 固定 O(n^2)
      * 
+     * 思路：寻找最大/最小值，将该值与最大/最小位置的值交换，待排序部分长度-1
+     * 
      */
     private void selectSort(int[] nums) {
         for (int i = nums.length - 1; i > 0; i--) {
@@ -212,6 +215,9 @@ class Solution {
     /**
      * 性能 O(n^2) 大多数场景下比冒泡好一点,比选择排序稍稍好一点,有的地方做为快速排序的补充
      * 
+     * 思路：左侧看作有序部分，待插入数值和左侧比较，若右侧小于左侧，则将当前位置赋值为左侧值，同时当前位置向前移动一位，直到找到
+     *      待插入数值应在的位置，将待插入数值放在其正确位置。
+     * 
      * 优化: 在查找插入位置时,不从后向前找,改用二分查找
      * 
      */
@@ -234,6 +240,9 @@ class Solution {
      * 时间复杂度：最好：O(nlogn) 最差： O(n^2) 平均：O(nlogn) 空间复杂度：
      * 在原有数组上排序，额外空间为常量级O(1)。但是递归调用的栈空间，平均为O(logn),最差(每次分区只完成一个数) 为 O(n) 每次选定一个轴
      * pivot
+     * 
+     * 思路： 取一个值，以这个值为轴，整理数组，将数组分为左右两部分，左边都比轴小，右边都比轴大，一遍遍历后找到轴的位置
+     *      将轴插入到其正确位置，然后分别对左边和右边部分进行递归操作
      */
     private void quickSort(int[] nums) {
         qsort(nums, 0, nums.length - 1);
@@ -293,6 +302,12 @@ class Solution {
 
     // ============= 希尔排序 ==========================================
     /**
+     * 性能： O(nlogn)
+     * 
+     * 思路：插入排序在数组有序的形况下复杂度为 O(n)， 即，比较一次就找到正确位置。
+     *       以此为根据，将数组按 步长 分为几组数据，组内先排序，当步数逐渐变小，组内长度逐渐变长时，组内为大致有序，此时组内的插入排序
+     *      性能要比直接进行完整的插入排序高。
+     * 
      * 步进式排序：步数由大到小最终步数为1时，排序完成
      */
     private void shellSort(int[] nums) {
@@ -370,28 +385,30 @@ class Solution {
 
     // ============= 堆排序 ======================================
     /**
+     * 性能： O(nlogn) 适合大数据排序，适合取前n位场景
      * 二叉树性质: 父节点 i , 左孩子为 2i+1,右孩子为 2i+2 子节点为 i, 父节点为 ( (i+1) / 2 ) - 1
+     * 
+     * 
+     * 思路： 先构造大顶堆，然后将堆顶与最后一个位置交换，完成最大值的固定，同时堆数组长度减一。
+     *          继续维护堆的性质，每次将最大值交换到最后，直到完成排序。
      * 
      */
     private void heapSort(int[] nums) {
+        buildHeap(nums);
+        
+        int tail = nums.length - 1;
+        while(tail > 0){
+            swap(nums,0,tail);
+            heapify(nums, tail, 0);
+            tail--;
+        }
 
     }
 
     private void buildHeap(int[] nums) {
         // 最后一个叶子节点的父节点开始
         for (int i = nums.length / 2 - 1; i >= 0; i--) {
-            int cur = i;
-            int left = 2 * i + 1;
-            int right = 2 * i + 2;
-            if (left < nums.length && nums[left] > nums[cur]) {
-                cur = left;
-            }
-            if (right < nums.length && nums[right] > nums[cur]) {
-                cur = right;
-            }
-            if (cur != i) {
-                swap(nums, cur, i);
-            }
+            heapify(nums, nums.length, i);
         }
     }
 

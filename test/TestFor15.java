@@ -1,3 +1,4 @@
+package test;
 import java.io.FileInputStream;
 
 public class TestFor15 {

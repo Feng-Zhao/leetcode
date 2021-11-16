@@ -1,3 +1,4 @@
+package test;
 public class TestValueArg {
     public void changeValueInFunction(int[] arr){
         int[] newArr = {0,0,0,0,0};
@@ -20,7 +21,14 @@ public class TestValueArg {
             return "Person:name = "+this.name + " Person:age = " + this.age;
         }
     }
+    
     public static void main(String[] args) {
+        Object obj = new Object();
+        System.err.println(obj);
+        System.out.println(obj.hashCode());
+
+
+
         int[] arr = {1,2,3,4,5};
 
         TestValueArg t = new TestValueArg();

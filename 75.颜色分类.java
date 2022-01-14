@@ -250,9 +250,9 @@ class Solution {
         if (left >= right) {// 终止条件，当左边界与右边界 相遇(即只有数组长度为 1) 或 超过右边界时
             return;
         }
-        int pivot = partition1(nums, left, right);
-        qsort(nums, left, pivot - 1);
-        qsort(nums, pivot + 1, right);
+        int pivotPos = partition1(nums, left, right);
+        qsort(nums, left, pivotPos - 1);
+        qsort(nums, pivotPos + 1, right);
     }
 
     /**
@@ -273,7 +273,7 @@ class Solution {
             }
             nums[right] = nums[left];
         }
-        // 最终
+        // 最终 left 与 right 相遇, 将 pivot 放入正确位置
         nums[left] = pivot;
         return left;
     }

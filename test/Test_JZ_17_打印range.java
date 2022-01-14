@@ -1,6 +1,5 @@
 package test;
 
-import java.util.stream.IntStream;
 
 public class Test_JZ_17_打印range {
     StringBuilder res;

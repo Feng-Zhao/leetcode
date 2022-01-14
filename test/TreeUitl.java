@@ -2,6 +2,8 @@ package test;
 
 import java.util.LinkedList;
 
+
+
 public class TreeUitl {
     public static TreeNode buildTree(int[] tree){
         if(tree == null || tree.length == 0){
@@ -22,5 +24,9 @@ public class TreeUitl {
             queue.offer(cur.right);
         }
         return root;
+    }
+
+    public static void printTree(TreeNode root){
+        LinkedList<TreeNode> queue = new LinkedList<>();
     }
 }

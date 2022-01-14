@@ -2,6 +2,8 @@ package test;
 
 import java.util.LinkedList;
 
+
+
 public class TreeUitl {
     public static TreeNode buildTree(int[] tree){
         if(tree == null || tree.length == 0){
@@ -23,7 +25,6 @@ public class TreeUitl {
         }
         return root;
     }
-
 
     public static Node buildTreeWithNode(int[] tree){
         if(tree == null || tree.length == 0){
@@ -62,6 +63,7 @@ public class TreeUitl {
         int[] tree = {1,2,3,4,5};
         Node head = buildTreeWithNode(tree);
         System.out.println(head);
+
     }
 }
 
